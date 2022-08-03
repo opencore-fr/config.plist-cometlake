@@ -1,52 +1,51 @@
-# Desktop Comet Lake
+# Comet lake PC Bureau
 
-| Support | Version |
+| Supoorte | Version |
 | :--- | :--- |
-| Initial macOS Support | macOS 10.15, Catalina |
+| Support macOS Initial | macOS 10.15, Catalina |
 
-## Starting Point
+## point de démarrage
 
-So making a config.plist may seem hard, it's not. It just takes some time but this guide will tell you how to configure everything, you won't be left in the cold. This also means if you have issues, review your config settings to make sure they're correct. Main things to note with OpenCore:
+Donc faire un config.plist semble difficile, mais ça l'est pas. Ca prend juste du temps mais ce guide vous expliqement comment tout configurer, ne voulaissera pas seul dans le froid. Ca signifie également que si vous avez des problèmes, re-regardez votre config et vos paramètres et soyez sur qu'ils sont bons et sans fautes!
 
-* **All properties must be defined**, there are no default OpenCore will fall back on so **do not delete sections unless told explicitly so**. If the guide doesn't mention the option, leave it at default.
-* **The Sample.plist cannot be used As-Is**, you must configure it to your system
-* **DO NOT USE CONFIGURATORS**, these rarely respect OpenCore's configuration and even some like Mackie's will add Clover properties and corrupt plists!
+* **Toutes les propriétés doivent être définies !**, il n'y a pas d'OpenCore par défaut sur lequel se rabattre alors **ne supprimez rien tant que c'est pas dit explicitement**. Si le guide ne mentionnepas une option, laissez par défaut
+* **Le sample.pliste ne dois PAS être utilisé par défaut**, vous devez le configurer a votre système.
+* **NE PAS UTILISER DE CONFIGURATEURS !!!!!!** ils respèctent rarement les configurations OpenCore et sont parfois pour CLover et risquent de corrompre les plists !
 
-Now with all that, a quick reminder of the tools we need
+Maintenant que tout ça est renté dans le cranez, un ptit rappel des outils nécessaires :
 
 * [ProperTree](https://github.com/corpnewt/ProperTree)
-  * Universal plist editor
+  * Éditer les plist
 * [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS)
-  * For generating our SMBIOS data
+  * Générer nos données SMBios
 * [Sample/config.plist](https://github.com/acidanthera/OpenCorePkg/releases)
-  * See previous section on how to obtain: [config.plist Setup](../config.plist/README.md)
+  * Voir comment l'obtenir plus tot: [config.plist Setup](../config.plist/README.md)
 
-**And read this guide more than once before setting up OpenCore and make sure you have it set up correctly. Do note that images will not always be the most up-to-date so please read the text below them, if nothing's mentioned then leave as default.**
+**Et merci de lire ce guide plus d'une fois avant de configurer openCore et soyez sur que vous l'avez configuré correctement. Prenez en compte que les iomagnes ne sont pas toujours les dernières a jour. Alors lisez le texte avant! Si rien n'est écrit, laissez par défaut.
 
 ## ACPI
 
-![ACPI](../images/config/config.plist/cometlake/acpi.png)
+![ACPI](https://dortania.github.io/OpenCore-Install-Guide/assets/img/acpi.dbb2ad3e.png)
 
-### Add
+### Ajouter
 
-::: tip Info
+>**Note**
+>C'est la ou vous devez ajouter les SSDT, ils sont vraiment important pour **démarrer macOS** et peuvent avoir des utilités tel que [mapper les ports USB](https://dortania.github.io/OpenCore-Post-Install/usb/), [désactiver les GPUs non-supportés](../extras/spoof.md) et autres. Et avec notre système, **c'est NÉCESSAIRE pour démarrer**. Guide pour les compiler ICI: [**Démarrer avec les ACPI**](https://dortania.github.io/Getting-Started-With-ACPI/)
 
-This is where you'll add SSDTs for your system, these are very important to **booting macOS** and have many uses like [USB maps](https://dortania.github.io/OpenCore-Post-Install/usb/), [disabling unsupported GPUs](../extras/spoof.md) and such. And with our system, **it's even required to boot**. Guide on making them found here: [**Getting started with ACPI**](https://dortania.github.io/Getting-Started-With-ACPI/)
+>Pour nous, beaucoup de SSDT vont être nécessaires pour ramener des fonctionalités que Clover avait amenés:
+>| SSDTs Nécessaires | Description |
+>| :--- | :--- |
+>| **[SSDT-PLUG](https://dortania.github.io/Getting-Started-With-ACPI/)** | Permet la gestion native de l'alimentation du processeur sur Haswell et plus récent, voir [Le guide pour démarrer avec les ACPI](https://dortania.github.io/Getting-Started-With-ACPI/) pour plus de détails. |
+>| **[SSDT-EC-USBX](https://dortania.github.io/Getting-Started-With-ACPI/)** | Corrige à la fois le contrôleur intégré et l'alimentation USB, voir [Le guide pour démarrer avec les ACPI](https://dortania.github.io/Getting-Started-With-ACPI/) pour + de détails. |
+>| **[SSDT-AWAC](https://dortania.github.io/Getting-Started-With-ACPI/)** | C'est le [patch pour les RTC 300 series](https://www.hackintosh-forum.de/forum/thread/39846-asrock-z390-taichi-ultimate/?pageNo=2), nécessaire pour toutes les cartes B460 et Z490 qui empêchent les systèmes de démarrer macOS. L'alternative est [SSDT-RTC0]>(https://dortania.github.io/Getting-Started-With-ACPI/) pour quand le ssdt AWAC ne fonctionne pas en raison de l'absence de l'horloge Legacy RTC, pour vérifier si vous en avez besoin et laquelle utiliser, allez voir [Démarrer avec les ACPI](https://dortania.github.io/Getting-Started-With-ACPI/)|
+>| **[SSDT-RHUB](https://dortania.github.io/Getting-Started-With-ACPI/)** | Nécessaire pour corriger les erreurs de périphérique racine sur les cartes Asus et potentiellement MSI. Cartes mères Gigabyte et AsRock **n'ont PAS**  besoin de ce ssdt.|
 
-For us we'll need a couple of SSDTs to bring back functionality that Clover provided:
+>Notez que vous **ne devez pas** ajoutez votre `DSDT.aml` généré ici, c'est déjà dans votre logiciel. Donc si il est la, retirez l'entrée de votre config.plist `config.plist` et dans le dossier EFI/OC/ACPI.
 
-| Required SSDTs | Description |
-| :--- | :--- |
-| **[SSDT-PLUG](https://dortania.github.io/Getting-Started-With-ACPI/)** | Allows for native CPU power management on Haswell and newer, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. |
-| **[SSDT-EC-USBX](https://dortania.github.io/Getting-Started-With-ACPI/)** | Fixes both the embedded controller and USB power, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. |
-| **[SSDT-AWAC](https://dortania.github.io/Getting-Started-With-ACPI/)** | This is the [300 series RTC patch](https://www.hackintosh-forum.de/forum/thread/39846-asrock-z390-taichi-ultimate/?pageNo=2), required for all B460 and Z490 boards which prevent systems from booting macOS. The alternative is [SSDT-RTC0](https://dortania.github.io/Getting-Started-With-ACPI/) for when AWAC SSDT is incompatible due to missing the Legacy RTC clock, to check whether you need it and which to use please see [Getting started with ACPI](https://dortania.github.io/Getting-Started-With-ACPI/) page. |
-| **[SSDT-RHUB](https://dortania.github.io/Getting-Started-With-ACPI/)** | Needed to fix Root-device errors on Asus and potentially MSI boards. Gigabyte and AsRock motherboards **do not** need this SSDT |
+>Pour ceux qui souhaitent approfondir le dump de votre DSDT, comment créer ces SSDT et les compiler, voir [**Démarrer avec les ACPI**](https://dortania.github.io/Getting-Started-With-ACPI/).
+>Les SSDT compilés ont une extention **.aml** (Assembled) et vont aller dans le dossier `EFI/OC/ACPI` et **doivent** e^tre spécifiés dans votre config sous `ACPI -> Add` bien sur.
 
-Note that you **should not** add your generated `DSDT.aml` here, it is already in your firmware. So if present, remove the entry for it in your `config.plist` and under EFI/OC/ACPI.
 
-For those wanting a deeper dive into dumping your DSDT, how to make these SSDTs, and compiling them, please see the [**Getting started with ACPI**](https://dortania.github.io/Getting-Started-With-ACPI/) **page.** Compiled SSDTs have a **.aml** extension(Assembled) and will go into the `EFI/OC/ACPI` folder and **must** be specified in your config under `ACPI -> Add` as well.
-
-:::
 
 ### Delete
 
