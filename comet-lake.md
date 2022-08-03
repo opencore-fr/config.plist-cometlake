@@ -47,17 +47,17 @@ Maintenant que tout ça est renté dans le cranez, un ptit rappel des outils né
 
 
 
-### Delete
+### "Delete"
 
-This blocks certain ACPI tables from loading, for us we can ignore this.
+Ce block contient des tables ACPI nécessaires pour démarrer, on peux l'oublier nous
 
-### Patch
+### "Patch"
 
-This section allows us to dynamically modify parts of the ACPI (DSDT, SSDT, etc.) via OpenCore. For us, our patches are handled by our SSDTs. This is a much cleaner solution as this will allow us to boot Windows and other OSes with OpenCore
+Cette section nous permet de modifier dynamiquement les ACPI (DSDT, SSDT, etc.) via OpenCore. Pour nous, nos patches sont faits par les SSDTs. C'est une solution beaucoup plus propre car cela nous permettra de démarrer Windows et d'autres systèmes d'exploitation avec OpenCore
 
-### Quirks
+### "Quirks"
 
-Settings relating to ACPI, leave everything here as default as we have no use for these quirks.
+Papamètres relatifs aux ACPI, laisser tout par défaut.
 
 ## Booter
 
