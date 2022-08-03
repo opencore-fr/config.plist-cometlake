@@ -21,7 +21,7 @@ Maintenant que tout ça est renté dans le cranez, un ptit rappel des outils né
 * [Sample/config.plist](https://github.com/acidanthera/OpenCorePkg/releases)
   * Voir comment l'obtenir plus tot: [config.plist Setup](../config.plist/README.md)
 
-**Et merci de lire ce guide plus d'une fois avant de configurer openCore et soyez sur que vous l'avez configuré correctement. Prenez en compte que les iomagnes ne sont pas toujours les dernières a jour. Alors lisez le texte avant! Si rien n'est écrit, laissez par défaut.
+**Et merci de lire ce guide plus d'une fois avant de configurer openCore et soyez sur que vous l'avez configuré correctement. Prenez en compte que les iomagnes ne sont pas toujours les dernières a jour. Alors lisez le texte avant! Si rien n'est écrit, laissez par défaut.**
 
 ## ACPI
 
