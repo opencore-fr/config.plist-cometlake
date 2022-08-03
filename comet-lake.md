@@ -6,20 +6,20 @@
 
 ## point de démarrage
 
-Donc faire un config.plist semble difficile, mais ça l'est pas. Ca prend juste du temps mais ce guide vous expliqement comment tout configurer, ne voulaissera pas seul dans le froid. Ca signifie également que si vous avez des problèmes, re-regardez votre config et vos paramètres et soyez sur qu'ils sont bons et sans fautes!
+Donc faire un config.plist semble difficile, mais ça l'est pas. Ca prend juste du temps mais ce guide vous expliqement comment tout configurer, ne pas vous laisser pas seul dans le froid. Ca signifie également que si vous avez des problèmes, re-regardez votre config et vos paramètres et soyez sur qu'ils sont bons et sans fautes!
 
 * **Toutes les propriétés doivent être définies !**, il n'y a pas d'OpenCore par défaut sur lequel se rabattre alors **ne supprimez rien tant que c'est pas dit explicitement**. Si le guide ne mentionnepas une option, laissez par défaut
 * **Le sample.pliste ne dois PAS être utilisé par défaut**, vous devez le configurer a votre système.
-* **NE PAS UTILISER DE CONFIGURATEURS !!!!!!** ils respèctent rarement les configurations OpenCore et sont parfois pour CLover et risquent de corrompre les plists !
+* **NE PAS UTILISER DE CONFIGURATEURS !!!!!!** ils respèctent rarement les configurations OpenCore et sont parfois pour Clover et risquent de corrompre les plists !
 
-Maintenant que tout ça est renté dans le cranez, un ptit rappel des outils nécessaires :
+Maintenant que tout ça est renté dans le crane, un ptit rappel des outils nécessaires :
 
 * [ProperTree](https://github.com/corpnewt/ProperTree)
   * Éditer les plist
 * [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS)
   * Générer nos données SMBios
 * [Sample/config.plist](https://github.com/acidanthera/OpenCorePkg/releases)
-  * Voir comment l'obtenir plus tot: [config.plist Setup](../config.plist/README.md)
+  * Voir comment l'obtenir ici: [config.plist Setup](../config.plist/README.md)
 
 **Et merci de lire ce guide plus d'une fois avant de configurer openCore et soyez sur que vous l'avez configuré correctement. Prenez en compte que les iomagnes ne sont pas toujours les dernières a jour. Alors lisez le texte avant! Si rien n'est écrit, laissez par défaut.**
 
