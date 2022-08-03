@@ -57,7 +57,7 @@ Cette section nous permet de modifier dynamiquement les ACPI (DSDT, SSDT, etc.) 
 
 ### "Quirks"
 
-Papamètres relatifs aux ACPI, laisser tout par défaut.
+Paramètres relatifs aux ACPI, laisser tout par défaut.
 
 ## Booter
 
